@@ -33,7 +33,9 @@
 		</section>
 		<div class="row">
 			
-			<table class="table table-striped">
+			<table class="table table-striped table-hover">
+				<thead></thead>
+				<tbody></tbody>
 				
 			</table>
 			</div>
@@ -48,6 +50,7 @@
 
 	<script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('js/function.js') }}"></script> <!-- mi ajax -->
+	<script type="text/javascript" src="{{ asset('js/function.js') }}"></script> 	<!-- mi ajax -->
+	<script type="text/javascript" src="{{ asset('js/tableEdit.js') }}"></script>	<!-- tabla editable-->
 </body>
 </htcol-sm-6 ml>

@@ -17,9 +17,15 @@ class ExcelController extends Controller
 		$this->request = $request;
 		$this->encargo = $encargo;
 	}
+
     public function index()
     {
     	return view('registro.index');
+    }
+
+    public function tabla()
+    {
+        return view('registro.tabla');
     }
 
     public function importUsers(Request $request, Encargo $encargo)

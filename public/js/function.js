@@ -12,11 +12,13 @@
                 data: formData,
                 cache: false,
                 contentType: false,
-	    processData: false
+	    		processData: false
+
             })
                 .done(function(res){
                     console.log(res);
                     var tabla = $("table");
+                    $("table").html('');
                     tabla.append('<tr><th>Albaran</th><th>Destinatario</th><th>Direccion</th><th>Poblacion</th><th>cp</th><th>Provincia</th><th>Tlf</th><th>Observaciones</th><th>Fecha</th></tr>');
                     $.each(res.data, function( key, value ) {
                         var nuevaFila = "<tr>";
