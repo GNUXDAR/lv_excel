@@ -31,35 +31,14 @@
 		</div>
 	</header>
 
-	<div class="container-fluid">
-		<section class="main row">
-			<article class="col-sm-6 col-md-10">
-				<div class="box box-info"><!-- 'route' => 'registro.store', --> 
-					{{ Form::open (['url' => 'import-excel', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'class' => 'form-horizontal']) }}
-						@include('registro.partials.form')
-		            {{ Form::close() }}
-				</div>
-				@include('registro.partials.info')
-			</article>
-			<aside class="col-sm-6 col-md-2">
-				<p>
-					1. Ingrese el fichero Excel que se procesara <br><br>
-
-					2. Es necesario que sea un archivo con formato adecuado .xls <br>
-				</p>
-			</aside>
-		</section>
 		<div class="row">
 			<div class="container">
 				<table class="table table-hover">
 					<div id="tablecontent"></div>
 				</table>
 			</div>
-			
-			</div>
-	</div>
+		</div>
 
-	
 		<footer class="footer">
 			<div class="container">
 				<h3 class="text-muted">Arturo Cabrera</h3>
@@ -69,6 +48,6 @@
 	<script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/function.js') }}"></script> 	<!-- mi ajax -->
-	
+
 </body>
 </html>

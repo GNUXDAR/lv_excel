@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::get('/home', 'ExcelController@index')->name('home');
 
-Route::post('/import-excel', 'ExcelController@importUsers');
+Route::post('/import-excel', 'ExcelController@importFile');
+//Route::post('/export', 'ExcelController@importFile');
 
 Route::get('/tabla', 'ExcelController@tabla');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Encargo;
 use \Excel;
+use Illuminate\Contracts\Validation\Validator;
 
 class ExcelController extends Controller
 {
@@ -29,16 +30,22 @@ class ExcelController extends Controller
         return view('registro.tabla');
     }
 
-    public function importUsers(Request $request, Encargo $encargo)
+    public function importFile(Request $request, Encargo $encargo)
     {
     	
+        //Excel::load($request->excel, function($reader)
         //
-        //Excel::selectSheets($excel)->load()
-        Excel::load($request->excel, function($reader) {
-            $reader->formatDates(true, 'Y-m-d');
+        Excel::selectSheetsByIndex(0)->load($request->excel, function($reader) {
+            $reader->formatDates(true, 'd-m-Y');
+            $reader->toArray();
     		$excel = $reader->get();
-            
+            //echo count($excel);
+             //print_r($excel-);
+             //dd($excel);
     		$excel->each(function($row) {
+
+            $this->validator($row);
+
     		$this->data[] = [
                             'id' => $this->i, 
                             'values' => [
@@ -58,14 +65,22 @@ class ExcelController extends Controller
     		});
     	});
         //dd($this->data);
-        return response()->json(
+        /*return response()->json(
                         ['data' => $this->data]
-            );
-        $this->request->session()->flash('info', 'Fichero Procesado');
-        // return view('registro.index', ['data' => $this->data]);
-
+            );*/
+        //$this->request->session()->flash('info', 'Fichero Procesado');
+        return view('registro.export', ['data' => json_encode($this->data)]);
     }
-// {"id":1, "values":{"country":"uk","age":33,"name":"Duke","firstname":"Patience","height":1.842,"email":"patience.duke@gmail.com","lastvisit":"11\/12\/2002"}},
 
+    public function validator($data)
+    {
+        //dd($data);
+         $validator = Validator::make($data, [
+            'albaran' => 'required',
+        ]);
+         if ($validator->fails()) {
 
+            dd($validator);
+        }
+    }
 }

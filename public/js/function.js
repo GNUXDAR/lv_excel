@@ -32,31 +32,13 @@
                      {  "name":"fecha",         "label":"Fecha","datatype":"date","editable":true}
                     ],
 
-                     "data" : data.data
+                     "data" : {{ $data->data }}
                 };
                 //console.log(datos);
 
-                editableGrid = new EditableGrid("ImportExel");
+                editableGrid = new EditableGrid("import-excel");
                 editableGrid.load(datos);
                 editableGrid.renderGrid("tablecontent", "testgrid");
-                    // var tabla = $("table");
-                    // $("table").html('');
-             //        tabla.append('<tr><th>Albaran</th><th>Destinatario</th><th>Direccion</th><th>Poblacion</th><th>cp</th><th>Provincia</th><th>Tlf</th><th>Observaciones</th><th>Fecha</th></tr>');
-             //        $.each(res.data, function( key, value ) {
-             //            var nuevaFila = "<tr>";
-             //            nuevaFila+= "<td>" + value.albaran + "</td>";
-             //            nuevaFila+= "<td>" + value.destinatario + "</td>";
-             //            nuevaFila+= "<td>" + value.direccion + "</td>";
-             //            nuevaFila+= "<td>" + value.poblacion + "</td>";
-             //            nuevaFila+= "<td>" + value.cp + "</td>";
-             //            nuevaFila+= "<td>" + value.provincia + "</td>";
-             //            nuevaFila+= "<td>" + value.tlf + "</td>";
-             //            nuevaFila+= "<td>" + value.observaciones + "</td>";
-             //            nuevaFila+= "<td>" + value.fecha.date + "</td>";
-             //            nuevaFila+= "</tr>";
-  				       // tabla.append(nuevaFila);
-		           //   });
-		   
                 });
         });
     });
