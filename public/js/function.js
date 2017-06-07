@@ -1,22 +1,38 @@
- $(function(){
-        $("#formFile").on("submit", function(e){
-            e.preventDefault();
-            var f = $(this);
-            var formData = new FormData(document.getElementById("formFile"));
-            //formData.append("dato", "valor");
-            formData.append('exel', $(this)[0].file);
-            $.ajax({
-                url: "import-excel",
-                type: "post",
-                dataType: "json",
-                data: formData,
-                cache: false,
-                contentType: false,
-	    		processData: false
+ function comprueba_extension(formulario, archivo) {
+   extensiones_permitidas = new Array(".xls", ".xlsx", ".xslm", ".xltx", ".xml");
+   mierror = "";
+   if (!archivo) {
+      //Si no tengo archivo, es que no se ha seleccionado un archivo en el formulario
+       mierror = "No has seleccionado ningún archivo";
+   }else{
+      //recupero la extensión de este nombre de archivo
+      extension = (archivo.substring(archivo.lastIndexOf("."))).toLowerCase();
+      //alert (extension);
+      //compruebo si la extensión está entre las permitidas
+      permitida = false;
+      for (var i = 0; i < extensiones_permitidas.length; i++) {
+         if (extensiones_permitidas[i] == extension) {
+         permitida = true;
+         break;
+         }
+      }
+      if (!permitida) {
+         mierror = "Comprueba la extensión del archivo. \nSólo se pueden subir archivos con extensiones: " + extensiones_permitidas.join();
+       }else{
+         //alert ("Todo correcto.");
+         formulario.submit();
+         return 1;
+       }
+   }
+   //si estoy aqui es que no se ha podido submitir
+   alert (mierror);
+   return 0;
+} 
 
-            })
-                .done(function(data){
-                   console.log(data);
+
+
+
+ $(function(){
                   
                  var datos =
                  {
@@ -32,13 +48,12 @@
                      {  "name":"fecha",         "label":"Fecha","datatype":"date","editable":true}
                     ],
 
-                     "data" : {{ $data->data }}
+                     "data" : data
                 };
                 //console.log(datos);
 
                 editableGrid = new EditableGrid("import-excel");
                 editableGrid.load(datos);
-                editableGrid.renderGrid("tablecontent", "testgrid");
-                });
-        });
+                editableGrid.renderGrid("tablecontent", "table table-hover", "import-excel");
+               
     });

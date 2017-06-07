@@ -162,6 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,  //add
 
         /*
          * Package Service Providers...

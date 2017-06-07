@@ -31,18 +31,28 @@
 		</div>
 	</header>
 
-		<div class="row">
-			<div class="container">
-				<table class="table table-hover">
-					<div id="tablecontent"></div>
-				</table>
-			</div>
+	<section class="main row">
+		
+		<div class="container">
+		<div>
+		<a href="{{ route('home') }}" class="btn btn-success">Atras</a>
+		<a href="#" class="btn btn-primary pull-right">Procesar</a><br><br>
 		</div>
+			<table class="table table-hover">
+			<script>
+		        console.log(value);
+        	</script>
+				<div id="tablecontent"></div>
+			</table>
+		</div>	
+	</section>
 
-		<footer class="footer">
-			<div class="container">
-				<h3 class="text-muted">Arturo Cabrera</h3>
-			</div>
+
+
+	<footer class="footer">
+		<div class="container">
+			<h3 class="text-muted">Arturo Cabrera</h3>
+		</div>
 		</footer>
 	<script type="text/javascript" src="{{ asset('js/tableEdit.js') }}"></script>	<!-- tabla editable-->
 	<script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>

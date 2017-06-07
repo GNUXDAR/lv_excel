@@ -6,6 +6,7 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Encargo;
 use \Excel;
+use JavaScript;
 //use Illuminate\Contracts\Validation\Validator;
 
 class ExcelController extends Controller
@@ -69,6 +70,11 @@ class ExcelController extends Controller
         /*return response()->json(
                         ['data' => $this->data]
             );*/
+
+        JavaScript::put([
+            'data' => $this->data
+        ]);
+
         //$this->request->session()->flash('info', 'Fichero Procesado');
         return view('registro.export', ['data' => json_encode($this->data), 'errors' => $this->errors]);
     }
@@ -90,8 +96,8 @@ class ExcelController extends Controller
         ]);
          if ($validator->fails()) {
 
-            return $validator->errors()->all();
-            //return redirect()->back()->withInput()->withErrors($validator->errors());
+            //return $validator->errors()->all();
+            return redirect()->back()->withInput()->withErrors($validator->errors());
         }
     }
 }
