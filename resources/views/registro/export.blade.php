@@ -35,7 +35,7 @@
 		
 		<div class="container">
 		<div>
-		<a href="{{ route('home') }}" class="btn btn-success">Atras</a>
+		<br><a href="{{ route('home') }}" class="btn btn-success">Atras</a>
 		<a href="#" class="btn btn-primary pull-right">Procesar</a><br><br>
 		</div>
 			<table class="table table-hover">

@@ -1,4 +1,4 @@
- function comprueba_extension(formulario, archivo) {
+function comprueba_extension(formulario, archivo) {
    extensiones_permitidas = new Array(".xls", ".xlsx", ".xslm", ".xltx", ".xml");
    mierror = "";
    if (!archivo) {
@@ -18,6 +18,7 @@
       }
       if (!permitida) {
          mierror = "Comprueba la extensión del archivo. \nSólo se pueden subir archivos con extensiones: " + extensiones_permitidas.join();
+         
        }else{
          //alert ("Todo correcto.");
          formulario.submit();
@@ -29,11 +30,7 @@
    return 0;
 } 
 
-
-
-
- $(function(){
-                  
+    $(function(){                
                  var datos =
                  {
                     "metadata":[

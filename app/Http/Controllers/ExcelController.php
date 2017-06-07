@@ -66,10 +66,6 @@ class ExcelController extends Controller
             $this->i++;
     		});
     	});
-        //dd($this->data);
-        /*return response()->json(
-                        ['data' => $this->data]
-            );*/
 
         JavaScript::put([
             'data' => $this->data
