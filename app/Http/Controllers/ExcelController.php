@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Http\Request;
 use App\Encargo;
 use \Excel;
-use Illuminate\Contracts\Validation\Validator;
+//use Illuminate\Contracts\Validation\Validator;
 
 class ExcelController extends Controller
 {
@@ -37,14 +38,14 @@ class ExcelController extends Controller
         //
         Excel::selectSheetsByIndex(0)->load($request->excel, function($reader) {
             $reader->formatDates(true, 'd-m-Y');
-            $reader->toArray();
+            //$reader->toArray();
     		$excel = $reader->get();
             //echo count($excel);
              //print_r($excel-);
              //dd($excel);
     		$excel->each(function($row) {
 
-            $this->validator($row);
+            $this->errors[] = $this->validator($row);
 
     		$this->data[] = [
                             'id' => $this->i, 
@@ -69,18 +70,28 @@ class ExcelController extends Controller
                         ['data' => $this->data]
             );*/
         //$this->request->session()->flash('info', 'Fichero Procesado');
-        return view('registro.export', ['data' => json_encode($this->data)]);
+        return view('registro.export', ['data' => json_encode($this->data), 'errors' => $this->errors]);
     }
 
     public function validator($data)
     {
         //dd($data);
-         $validator = Validator::make($data, [
-            'albaran' => 'required',
+         $validator = Validator::make($data->toArray(), [
+            'albaran' => 'required|numeric|max:10',
+            'destinatario' => 'required|string|max:28',
+            'direccion' => 'required|string|max:250',
+            'poblacion' => 'required|string|max:10',
+            'cp' => 'required|string|min:5|max:5',
+            'provincia' => 'required|max:20',
+            'telefono' => 'required|max:10',
+            'observaciones' => 'max:500',
+            'fecha' => 'required|date',
+
         ]);
          if ($validator->fails()) {
 
-            dd($validator);
+            return $validator->errors()->all();
+            //return redirect()->back()->withInput()->withErrors($validator->errors());
         }
     }
 }

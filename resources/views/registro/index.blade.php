@@ -47,6 +47,8 @@
 
 					2. Es necesario que sea un archivo con formato adecuado .xls <br>
 				</p>
+
+				
 			</aside>
 		</section>
 		<div class="row">
