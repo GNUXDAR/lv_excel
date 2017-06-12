@@ -50,7 +50,7 @@
                 </tr>
             </thead>
             <tbody>
-            	@foreach($data as $key => $value)
+            	@foreach($data as $value)
 						<!-- cmienza desde 56, no entiendo porque -->
 							<tr>
 							<td>{!! $value['id'] !!}</td>
@@ -61,35 +61,89 @@
 								@if (empty($value['albaran']))
 									{{ 'No puede estar vacio' }}
 								@elseif ($mp > 20)
-									{{--'Debe ser menos'--}}
+									{{ 'Debe ser menos' }}
 								@endif
 							@php //die() @endphp
 							</td>
+
 							<td>
 							{!! $value['destinatario'] !!}
-							{{ $mp = strlen($value['destinatario'])-77 }}
+							{{ $mp = strlen($value['destinatario']) }}
 								
 								@if (empty($mp))
 									{{ 'No puede estar vacio' }}
-								@elseif ($mp >= 28)
+								@elseif ($mp > 28)
+									{{ 'Debe ser menos' }}
+									{{ print_r($mp) }}
+								@endif
+							</td>
+
+							<td>
+							{!! $value['direccion'] !!}
+							{{ $mp = strlen($value['direccion']) }}
+								
+								@if (empty($mp))
+									{{ 'No puede estar vacio' }}
+								@elseif ($mp > 250)
 									{{'Debe ser menos'}}
 								@endif
 							</td>
-							<td>{!! $value['direccion'] !!}</td>
-							<td>{!! $value['poblacion'] !!}</td>
-							<td>{!! $value['cp'] !!}</td>
-							<td>{!! $value['provincia'] !!}</td>
+
+							<td>
+							{!! $value['poblacion'] !!}
+							{{ $mp = strlen($value['poblacion']) }}
+								
+								@if (empty($mp))
+									{{ 'No puede estar vacio' }}
+								@elseif ($mp > 10)
+									{{'Debe ser menos'}}
+								@endif
+							</td>
+
+							<td>
+							{!! $value['cp'] !!}
+							{{ $mp = strlen($value['cp']) }}
+								
+								@if (empty($mp))
+									{{ 'No puede estar vacio' }}
+								@elseif ($mp < 5 && $mp > 5)
+									{{'Debe ser 5'}}
+								@endif
+							</td>
+
+							<td>
+							{!! $value['provincia'] !!}
+							{{ $mp = strlen($value['provincia']) }}
+								
+								@if (empty($mp))
+									{{ 'No puede estar vacio' }}
+								@elseif ($mp > 20)
+									{{'Debe ser menos'}}
+								@endif
+							</td>
+
 							<td>
 							{!! $value['telefono'] !!}
-							{{ $mp = strlen($value['telefono'])-56 }}
+							{{ $mp = strlen($value['telefono']) }}
 								
 								@if (empty($mp))
 									{{ 'No puede estar vacio' }}
-								@elseif ($mp >= 28)
+								@elseif ($mp > 28)
 									{{'Debe ser menos'}}
 								@endif
 							</td>
-							<td>{!! $value['observaciones'] !!}</td>
+
+							<td>
+							{!! $value['observaciones'] !!}
+							{{ $mp = strlen($value['observaciones']) }}
+								
+								@if (empty($mp))
+									{{ 'No puede estar vacio' }}
+								@elseif ($mp > 500)
+									{{'Debe ser menos'}}
+								@endif
+							</td>
+
 							<td>{!! $value['fecha'] !!}</td>
 						</tr>
 
