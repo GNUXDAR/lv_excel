@@ -21,3 +21,5 @@ Route::post('/import-excel', 'ExcelController@importFile');
 //Route::post('/export', 'ExcelController@importFile');
 
 Route::get('/tabla', 'ExcelController@tabla');
+
+Route::get('validate-albaran','ExcelController@validateAlbaran');

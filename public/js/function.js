@@ -49,8 +49,8 @@ function comprueba_extension(formulario, archivo) {
                 };
                 //console.log(datos);
 
-                editableGrid = new EditableGrid("import-excel");
-                editableGrid.load(datos);
-                editableGrid.renderGrid("tablecontent", "table table-hover", "import-excel");
+                //editableGrid = new EditableGrid("import-excel");
+                //editableGrid.load(datos);
+                //editableGrid.renderGrid("tablecontent", "table table-hover", "import-excel");
                
     });

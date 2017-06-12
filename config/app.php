@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -229,7 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,        //add
-      'Html' => Collective\Html\HtmlFacade::class,          //add
+        'Html' => Collective\Html\HtmlFacade::class,          //add
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,  //add
 
     ],
