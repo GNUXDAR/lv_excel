@@ -7,6 +7,7 @@ use App\Encargo;
 use \Excel;
 use Validator;
 use JavaScript;
+use App\Http\Requests\ExcelRequest;
 
 class ExcelController extends Controller
 {
@@ -42,9 +43,6 @@ class ExcelController extends Controller
             $reader->formatDates(true, 'd-m-Y');
             $reader->toArray();
     		$excel = $reader->get();
-            //echo count($excel);
-             //print_r($excel-);
-             //dd($excel);
 
     		$excel->each(function($row) {
 
@@ -52,6 +50,22 @@ class ExcelController extends Controller
             //var_dump($this->errors);
 
     		$this->data[] = [ 
+                            'id' => $this->i,
+                            'albaran' => $row->albaran,
+                            'destinatario' => $row->destinatario,
+                            'direccion' => $row->direccion,
+                            'poblacion' => $row->poblacion,
+                            'cp' => $row->cp,
+                            'provincia' => $row->provincia,
+                            'telefono' => $row->telefono,
+                            'observaciones' => $row->observaciones,
+                            'fecha' => $row->fecha,
+                                          
+                            ];
+
+
+
+                            /*[ 
                             'id' => $this->i,
                             'albaran' => '<input type="text" size="10" name="albaran[]" value="'.$row->albaran.'">',
                             'destinatario' => '<input type="text" title="'.$row->destinatario.'" name="destinatario[]" value="'.$row->destinatario.'">',
@@ -63,7 +77,7 @@ class ExcelController extends Controller
                             'observaciones' => '<input type="text" size="10" name="observaciones[]" value="'.$row->observaciones.'">',
                             'fecha' => '<input type="text" size="10" name="fecha[]" value="'.$row->fecha.'">',
                                           
-                            ];
+                            ];*/
     			//$data = $row->toArray();  //recore los datos
             $this->i++;
     		});
@@ -86,10 +100,10 @@ class ExcelController extends Controller
         //$this->validateAlbaran($data->toArray()['albaran']);
          $validator = Validator::make($data->toArray(), [
             
+            'albaran' => 'required|numeric|max:10',
             'destinatario' => 'required|string|max:28',
             'direccion' => 'required|string|max:250',
             'poblacion' => 'required|string|max:10',
-            'albaran' => 'required|numeric|max:10',
             'cp' => 'required|string|min:5|max:5',
             'provincia' => 'required|max:20',
             'telefono' => 'required|max:10',
@@ -129,6 +143,22 @@ class ExcelController extends Controller
                 }*/
         }
         
+    }
+
+    public function store(ExcelRequest $request)
+    {
+        $validateExcel = new Excel;
+
+        $validateExcel->albaran   =   $request->albaran;
+        $validateExcel->destinatario   =   $request->destinatario;
+        $validateExcel->direccion =   $request->direccion;
+        $validateExcel->poblacion    =   $request->poblacion;
+        $validateExcel->provincia    =   $request->provincia;
+        $validateExcel->telefono    =   $request->telefono;
+        $validateExcel->observaciones    =   $request->observaciones;
+        $validateExcel->fecha    =   $request->fecha;
+        $validateExcel->save();
+        return redirect()->route('home')->with('info', 'Datos Guardados');
     }
 
     public function validateAlbaran(Request $request, Encargo $encargo)

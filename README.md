@@ -8,6 +8,7 @@
 
 ## Sobre lv_Excel
 
+[En DESARROLLO]
 Es un pequeño modulo que puede seervir para incorporar a un sistema mas grande, consta de importar los datos de un fichero de excel a una base de datos, puede mostrar y validar lo que va a cargar antes de subir los datos finales a la base de datos.
 :octocat:
 

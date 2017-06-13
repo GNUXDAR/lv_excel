@@ -23,8 +23,10 @@
 		
 		<div class="container">
 		<div>
+		<form method="post" action="{{ url('import-excel') }}">
 		<br><a href="{{ route('home') }}" class="btn btn-success">Atras</a>
-		<a href="#" class="btn btn-primary pull-right">Procesar</a><br><br>
+		<input type="submit" value="Procesar" class="btn btn-primary pull-right">
+		<!-- <a href="#" class="btn btn-primary pull-right">Procesar</a> --><br><br>
 		</div>
 
 			<!-- <table class="table table-hover">
@@ -50,111 +52,62 @@
                 </tr>
             </thead>
             <tbody>
-            	@foreach($data as $value)
-						<!-- cmienza desde 56, no entiendo porque -->
-							<tr>
-							<td>{!! $value['id'] !!}</td>
-							<td>
-							{!! $value['albaran'] !!}
-							{{ $mp = strlen($value['albaran'])-55 }}
-								
-								@if (empty($value['albaran']))
-									{{ 'No puede estar vacio' }}
-								@elseif ($mp > 20)
-									{{ 'Debe ser menos' }}
-								@endif
-							@php //die() @endphp
-							</td>
+           
+            	@foreach($data as $key => $value)
 
-							<td>
-							{!! $value['destinatario'] !!}
-							{{ $mp = strlen($value['destinatario']) }}
-								
-								@if (empty($mp))
-									{{ 'No puede estar vacio' }}
-								@elseif ($mp > 28)
-									{{ 'Debe ser menos' }}
-									{{ print_r($mp) }}
-								@endif
-							</td>
+				<tr>
+					<td>{!! $value['id'] !!}</td>
+					<td>
+					<input type="text" size="10" name="albaran[{{$key}}]" value="{{ $value['albaran'] }}">
+					<div class="alert alert-danger">
+						<button type="button" class="close" data-dismiss="alert">
+							&times;
+						</button>
+						{{ $errors->first('albaran[$key]') }}
+					</div>
+					
+					</td>
 
-							<td>
-							{!! $value['direccion'] !!}
-							{{ $mp = strlen($value['direccion']) }}
-								
-								@if (empty($mp))
-									{{ 'No puede estar vacio' }}
-								@elseif ($mp > 250)
-									{{'Debe ser menos'}}
-								@endif
-							</td>
+					<td>
+					<input type="text" name="destinatario[{{$key}}]" value="{!! $value['destinatario'] !!}">
+					<div class="alert alert-danger">
+						<button type="button" class="close" data-dismiss="alert">
+							&times;
+						</button>
+						{{ $errors->first('destinatario[$key]') }}
+					</div>
+					</td>
 
-							<td>
-							{!! $value['poblacion'] !!}
-							{{ $mp = strlen($value['poblacion']) }}
-								
-								@if (empty($mp))
-									{{ 'No puede estar vacio' }}
-								@elseif ($mp > 10)
-									{{'Debe ser menos'}}
-								@endif
-							</td>
+					<td>
+					<input type="text" name="direccion[{{$key}}]" value="{!! $value['direccion'] !!}">
+					</td>
 
-							<td>
-							{!! $value['cp'] !!}
-							{{ $mp = strlen($value['cp']) }}
-								
-								@if (empty($mp))
-									{{ 'No puede estar vacio' }}
-								@elseif ($mp < 5 && $mp > 5)
-									{{'Debe ser 5'}}
-								@endif
-							</td>
+					<td>
+					<input type="text" name="poblacion[{{$key}}]" value="{!! $value['poblacion'] !!}">
+					<td>
+					<input type="text" size="6" name="cp[{{$key}}]" value="{!! $value['cp'] !!}">
+					</td>
 
-							<td>
-							{!! $value['provincia'] !!}
-							{{ $mp = strlen($value['provincia']) }}
-								
-								@if (empty($mp))
-									{{ 'No puede estar vacio' }}
-								@elseif ($mp > 20)
-									{{'Debe ser menos'}}
-								@endif
-							</td>
+					<td>
+					<input type="text" size="10" name="provincia[{{$key}}]" value="{!! $value['provincia'] !!}">
+					</td>
 
-							<td>
-							{!! $value['telefono'] !!}
-							{{ $mp = strlen($value['telefono']) }}
-								
-								@if (empty($mp))
-									{{ 'No puede estar vacio' }}
-								@elseif ($mp > 28)
-									{{'Debe ser menos'}}
-								@endif
-							</td>
+					<td>
+					<input type="text" size="10" name="telefono[{{$key}}]" value="{!! $value['telefono'] !!}">
+					</td>
 
-							<td>
-							{!! $value['observaciones'] !!}
-							{{ $mp = strlen($value['observaciones']) }}
-								
-								@if (empty($mp))
-									{{ 'No puede estar vacio' }}
-								@elseif ($mp > 500)
-									{{'Debe ser menos'}}
-								@endif
-							</td>
+					<td>
+					<input type="text" size="10" name="observaciones[{{$key}}]" value="{!! $value['observaciones'] !!}">
+					</td>
 
-							<td>{!! $value['fecha'] !!}</td>
-						</tr>
+					<td>
+					<input type="text" size="10" name="fecha[{{$key}}]" value="{!! $value['fecha'] !!}">
+					</td>
+				</tr>
 
 				@endforeach
-                
-               
-             
 
-                 
-             
-             
+                </form>
             </tbody>
         </table>
 		</div>	
