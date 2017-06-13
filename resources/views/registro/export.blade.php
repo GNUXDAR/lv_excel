@@ -59,49 +59,125 @@
 					<td>{!! $value['id'] !!}</td>
 					<td>
 					<input type="text" size="10" name="albaran[{{$key}}]" value="{{ $value['albaran'] }}">
-					<div class="alert alert-danger">
-						<button type="button" class="close" data-dismiss="alert">
-							&times;
-						</button>
-						{{ $errors->first('albaran[$key]') }}
-					</div>
+					@if (isset($errors[$value['id']]['albaran']))
+						<div class="alert alert-danger">
+							<button type="button" class="close" data-dismiss="alert">
+								&times;
+							</button>
+	                            {{ $errors[$value['id']]['albaran'] }}
+						</div>
+					@endif
 					
 					</td>
 
 					<td>
 					<input type="text" name="destinatario[{{$key}}]" value="{!! $value['destinatario'] !!}">
-					<div class="alert alert-danger">
-						<button type="button" class="close" data-dismiss="alert">
-							&times;
-						</button>
-						{{ $errors->first('destinatario[$key]') }}
-					</div>
+					@if (isset($errors[$value['id']]['destinatario']))
+						<div class="alert alert-danger">
+							<button type="button" class="close" data-dismiss="alert">
+								&times;
+							</button>
+							
+	                            {{ $errors[$value['id']]['destinatario'] }}
+	                        
+						</div>
+					@endif
 					</td>
 
 					<td>
 					<input type="text" name="direccion[{{$key}}]" value="{!! $value['direccion'] !!}">
+					@if (isset($errors[$value['id']]['direccion']))
+						<div class="alert alert-danger">
+							<button type="button" class="close" data-dismiss="alert">
+								&times;
+							</button>
+							
+	                            {{ $errors[$value['id']]['direccion'] }}
+	                        
+						</div>
+					@endif
 					</td>
 
 					<td>
 					<input type="text" name="poblacion[{{$key}}]" value="{!! $value['poblacion'] !!}">
+					@if (isset($errors[$value['id']]['poblacion']))
+						<div class="alert alert-danger">
+							<button type="button" class="close" data-dismiss="alert">
+								&times;
+							</button>
+							
+	                            {{ $errors[$value['id']]['poblacion'] }}
+	                        
+						</div>
+					@endif
 					<td>
 					<input type="text" size="6" name="cp[{{$key}}]" value="{!! $value['cp'] !!}">
+					@if (isset($errors[$value['id']]['cp']))
+						<div class="alert alert-danger">
+							<button type="button" class="close" data-dismiss="alert">
+								&times;
+							</button>
+							
+	                            {{ $errors[$value['id']]['cp'] }}
+	                        
+						</div>
+					@endif
 					</td>
 
 					<td>
 					<input type="text" size="10" name="provincia[{{$key}}]" value="{!! $value['provincia'] !!}">
+					@if (isset($errors[$value['id']]['provincia']))
+						<div class="alert alert-danger">
+							<button type="button" class="close" data-dismiss="alert">
+								&times;
+							</button>
+							
+	                            {{ $errors[$value['id']]['provincia'] }}
+	                        
+						</div>
+					@endif
 					</td>
 
 					<td>
 					<input type="text" size="10" name="telefono[{{$key}}]" value="{!! $value['telefono'] !!}">
+					@if (isset($errors[$value['id']]['telefono']))
+						<div class="alert alert-danger">
+							<button type="button" class="close" data-dismiss="alert">
+								&times;
+							</button>
+							
+	                            {{ $errors[$value['id']]['telefono'] }}
+	                        
+						</div>
+					@endif
 					</td>
 
 					<td>
 					<input type="text" size="10" name="observaciones[{{$key}}]" value="{!! $value['observaciones'] !!}">
+					@if (isset($errors[$value['id']]['observaciones']))
+						<div class="alert alert-danger">
+							<button type="button" class="close" data-dismiss="alert">
+								&times;
+							</button>
+							
+	                            {{ $errors[$value['id']]['observaciones'] }}
+	                        
+						</div>
+					@endif
 					</td>
 
 					<td>
 					<input type="text" size="10" name="fecha[{{$key}}]" value="{!! $value['fecha'] !!}">
+					@if (isset($errors[$value['id']]['fecha']))
+						<div class="alert alert-danger">
+							<button type="button" class="close" data-dismiss="alert">
+								&times;
+							</button>
+							
+	                            {{ $errors[$value['id']]['fecha'] }}
+	                        
+						</div>
+					@endif
 					</td>
 				</tr>
 

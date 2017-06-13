@@ -18,15 +18,15 @@ class ExcelController extends Controller
     public $errors = [];
     public $input = [];
 
-	public function __construct(Request $request, Encargo $encargo)
-	{
-		$this->request = $request;
-		$this->encargo = $encargo;
-	}
+    public function __construct(Request $request, Encargo $encargo)
+    {
+        $this->request = $request;
+        $this->encargo = $encargo;
+    }
 
     public function index()
     {
-    	return view('registro.index');
+        return view('registro.index');
     }
 
     public function tabla()
@@ -36,113 +36,88 @@ class ExcelController extends Controller
 
     public function importFile(Request $request, Encargo $encargo)
     {
-    	
-        //Excel::load($request->excel, function($reader)
-        //
+        $this->rules = [
+            'albaran'       => 'required|numeric|max:9999999999',
+            'destinatario'  => 'required|string|max:28',
+            'direccion'     => 'required|string|max:250',
+            'poblacion'     => 'required|string|max:10',
+            'cp'            => 'required|string|min:5|max:5',
+            'provincia'     => 'required|max:20',
+            'telefono'      => 'required|max:10',
+            'observaciones' => 'max:500',
+            'fecha'         => 'required|date',
+        ];
+
+        $this->errors = [];
+        $this->data = [];
+
         Excel::selectSheetsByIndex(0)->load($request->excel, function($reader) {
+            
             $reader->formatDates(true, 'd-m-Y');
-            $reader->toArray();
-    		$excel = $reader->get();
 
-    		$excel->each(function($row) {
+            $excel = $reader->get();
 
-            $this->errors = $this->validator($row);
-            //var_dump($this->errors);
+            $this->errors = [];
+            $this->rowNumber = 0;
 
-    		$this->data[] = [ 
-                            'id' => $this->i,
-                            'albaran' => $row->albaran,
-                            'destinatario' => $row->destinatario,
-                            'direccion' => $row->direccion,
-                            'poblacion' => $row->poblacion,
-                            'cp' => $row->cp,
-                            'provincia' => $row->provincia,
-                            'telefono' => $row->telefono,
-                            'observaciones' => $row->observaciones,
-                            'fecha' => $row->fecha,
-                                          
-                            ];
+            $excel->each(function($row) {
 
+                $this->data[$this->rowNumber] = [
+                    'albaran'       => $row->albaran,
+                    'destinatario'  => $row->destinatario,
+                    'direccion'     => $row->direccion,
+                    'poblacion'     => $row->poblacion,
+                    'cp'            => $row->cp,
+                    'provincia'     => $row->provincia,
+                    'telefono'      => $row->telefono,
+                    'observaciones' => $row->observaciones,
+                    'fecha'         => $row->fecha,
+                ];
 
+                foreach ($this->data[$this->rowNumber] as $key => $value) {
 
-                            /*[ 
-                            'id' => $this->i,
-                            'albaran' => '<input type="text" size="10" name="albaran[]" value="'.$row->albaran.'">',
-                            'destinatario' => '<input type="text" title="'.$row->destinatario.'" name="destinatario[]" value="'.$row->destinatario.'">',
-                            'direccion' => '<input type="text" size="10" name="direccion[]" value="'.$row->direccion.'">',
-                            'poblacion' => '<input type="text" size="10" name="poblacion[]" value="'.$row->poblacion.'">',
-                            'cp' => '<input type="text" size="10"  name="cp[]" value="'.$row->cp.'">',
-                            'provincia' => '<input type="text" size="10" name="provincia[]" value="'.$row->provincia.'">',
-                            'telefono' => '<input type="text" size="10" name="telefono[]" value="'.$row->telefono.'">',
-                            'observaciones' => '<input type="text" size="10" name="observaciones[]" value="'.$row->observaciones.'">',
-                            'fecha' => '<input type="text" size="10" name="fecha[]" value="'.$row->fecha.'">',
-                                          
-                            ];*/
-    			//$data = $row->toArray();  //recore los datos
-            $this->i++;
-    		});
-    	});
+                    $error = $this->validateCell([$key => $value], [$key => $this->rules[$key]]);
 
-        //dd($this->data);
-        /*return response()->json(
-                        ['data' => $this->data]
-            );*/
-        //$this->request->session()->flash('info', 'Fichero Procesado');
-        // JavaScript::put([
-        //     'data' =>  $this->data
-        // ]);
+                    if (!empty($error)) {
+                        $this->errors[$this->rowNumber][$key] = $error;
+                    }
+                    
+                }
+
+                $this->data[$this->rowNumber]['id'] = $this->rowNumber;
+
+                $this->rowNumber++;
+            });
+        });
+
         return view('registro.export', [ 'data' => $this->data, 'errors' => $this->errors, 'input' => $this->input]);
     }
 
-    public function validator($data)
+    /**
+     * Validate cell against the rules.
+     *
+     * @param array $data
+     * @param array $rules
+     *
+     * @return array
+     */
+    protected function validateCell(array $data, array $rules)
     {
-        //dd($data->toArray());
-        //$this->validateAlbaran($data->toArray()['albaran']);
-         $validator = Validator::make($data->toArray(), [
-            
-            'albaran' => 'required|numeric|max:10',
-            'destinatario' => 'required|string|max:28',
-            'direccion' => 'required|string|max:250',
-            'poblacion' => 'required|string|max:10',
-            'cp' => 'required|string|min:5|max:5',
-            'provincia' => 'required|max:20',
-            'telefono' => 'required|max:10',
-            'observaciones' => 'max:500',
-            'fecha' => 'required|date',
-        ]);
+        // Perform Validation
+        $validator = \Validator::make($data, $rules);
 
-        
         if ($validator->fails()) {
-            return $validator->getMessageBag()->toArray();
-                //dd($validator->failed());
-                    
-               /* foreach ($validator->failed() as $key => $value) {
-                    switch ($key) {
-                        case 'albaran':
-                                foreach ($value as $key => $value) {
-                                   
-                                   switch ($key) {
-                                       case 'Required':
-                                           
-                                           break;
-                                        case 'Max':
-                                            # code...
-                                            break;
-                                       
-                                       default:
-                                           # code...
-                                           break;
-                                   }
-                                }
-                            break;
-                        
-                        default:
-                            # code...
-                            break;
-                    }
-                }*/
+            $errorMessages = $validator->errors()->messages();
+
+            // crete error message by using key and value
+            foreach ($errorMessages as $key => $value) {
+                $errorMessages = $value[0];
+            }
+
+            return $errorMessages;
         }
-        
+
+        return [];
     }
 
     public function store(ExcelRequest $request)
