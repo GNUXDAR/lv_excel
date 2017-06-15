@@ -115,13 +115,15 @@ class ExcelController extends Controller
             }
 
             return $errorMessages;
-        }
+        }else{
 
         return [];
+        }
     }
 
     public function store(ExcelRequest $request)
     {
+        //dd($request->all());
         $validateExcel = new Excel;
 
         $validateExcel->albaran   =   $request->albaran;
@@ -135,61 +137,5 @@ class ExcelController extends Controller
         $validateExcel->save();
         return redirect()->route('home')->with('info', 'Datos Guardados');
     }
-
-    public function validateAlbaran(Request $request, Encargo $encargo)
-    {
-        
-        //dd($request);
-        $menssages = [];
-        foreach ($request->albaran as $key =>  $value) {
-            if ($value == '') {
-                $menssages[]['required'] = 'es requerido id '.$key;
-            }
-             if (strlen($value) > 10) {
-                 $menssages[]['max'] = 'es max id '.$key;
-            }
-             if ($value == '') {
-                
-            }
-
-        }
-       // $validator = Validator::make($request->array1, [
-            
-       //      'albaran' => 'required|numeric|max:10',
-            
-       //  ])->validate();
-
-        return response()->json($menssages);
-    }
-
-     public function validateString($value)
-    {
-        
-        
-    }
-
-     public function validateMax($value)
-    {
-        
-        
-    }
-         public function validateMin($value)
-    {
-        
-        
-    }
-         public function validateDate($value)
-    {
-        
-        
-    }
-         public function validateNumeric($value)
-    {
-        
-        
-    }
-    
-    
-
 
 }

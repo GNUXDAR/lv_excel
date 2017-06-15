@@ -7,10 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
 	
 	<link rel="stylesheet" href="{{ asset('css/editablegrid/editablegrid.css') }}" type="text/css" media="screen">
-	
-	<style>
-		
-	</style>
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/micss.css') }}">
 </head>
 <body>
 	<header>
@@ -23,9 +20,11 @@
 		
 		<div class="container">
 		<div>
-		<form method="post" action="{{ url('import-excel') }}">
+		{{ Form::open (['url' => 'export', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'class' => 'form-horizontal']) }}
+
+		{!! csrf_field() !!}
 		<br><a href="{{ route('home') }}" class="btn btn-success">Atras</a>
-		<input type="submit" value="Procesar" class="btn btn-primary pull-right">
+		{{ Form::submit('Procesar', ['class' => 'btn btn-lg btn-primary pull-right', 'id' => 'request'])}}
 		<!-- <a href="#" class="btn btn-primary pull-right">Procesar</a> --><br><br>
 		</div>
 
@@ -36,156 +35,70 @@
 				<div id="tablecontent"></div>
 				@
 			</table> -->
-		<table class="table table-striped">
-            <thead>
-                <tr>
-                	<th>#</th>
-                    <th>Albaran</th>
-                    <th>Destinatario</th>
-                    <th>Direccion</th>
-                    <th>Poblacion</th>
-                    <th>cp</th>
-                    <th>Provincias</th>
-                    <th>Tlf</th>
-                    <th>Observaciones</th>
-                    <th>Fecha</th>
-                </tr>
-            </thead>
-            <tbody>
-           
-            	@foreach($data as $key => $value)
+		<div class="table-responsive">
+			<table class="table table-striped">
+	            <thead>
+	                <tr>
+	                	<th>#</th>
+	                    <th>Albaran</th>
+	                    <th>Destinatario</th>
+	                    <th>Direccion</th>
+	                    <th>Poblacion</th>
+	                    <th>cp</th>
+	                    <th>Provincias</th>
+	                    <th>Tlf</th>
+	                    <th>Observaciones</th>
+	                    <th>Fecha</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	            	@foreach($data as $key => $value)
 
-				<tr>
-					<td>{!! $value['id'] !!}</td>
-					<td>
-					<input type="text" size="10" name="albaran[{{$key}}]" value="{{ $value['albaran'] }}">
-					@if (isset($errors[$value['id']]['albaran']))
-						<div class="alert alert-danger">
-							<button type="button" class="close" data-dismiss="alert">
-								&times;
-							</button>
-	                            {{ $errors[$value['id']]['albaran'] }}
-						</div>
-					@endif
-					
-					</td>
+					<tr>
+						<td>{!! $i = $value['id'] + 1 !!}</td>
+						<td>
+							<input type="text" size="10" id="{{ $value['id'] }}" name="albaran[]" value="{{ $value['albaran'] }}" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ (isset($errors[$value['id']]['albaran'])) ? $errors[$value['id']]['albaran'] : '' }}" class="{{ (isset($errors[$value['id']]['albaran'])) ? 'form-control has-error' : '' }}">
+						</td>
 
-					<td>
-					<input type="text" name="destinatario[{{$key}}]" value="{!! $value['destinatario'] !!}">
-					@if (isset($errors[$value['id']]['destinatario']))
-						<div class="alert alert-danger">
-							<button type="button" class="close" data-dismiss="alert">
-								&times;
-							</button>
-							
-	                            {{ $errors[$value['id']]['destinatario'] }}
-	                        
-						</div>
-					@endif
-					</td>
+						<td>
+							<input type="text" size="10"  name="destinatario[]" value="{!! $value['destinatario'] !!}" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ (isset($errors[$value['id']]['destinatario'])) ? $errors[$value['id']]['destinatario'] : '' }}" class="{{ (isset($errors[$value['id']]['destinatario'])) ? 'form-control has-error' : '' }}">
+						</td>
 
-					<td>
-					<input type="text" name="direccion[{{$key}}]" value="{!! $value['direccion'] !!}">
-					@if (isset($errors[$value['id']]['direccion']))
-						<div class="alert alert-danger">
-							<button type="button" class="close" data-dismiss="alert">
-								&times;
-							</button>
-							
-	                            {{ $errors[$value['id']]['direccion'] }}
-	                        
-						</div>
-					@endif
-					</td>
+						<td>
+							<input type="text" size="10"  name="direccion[]" value="{!! $value['direccion'] !!}" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ (isset($errors[$value['id']]['direccion'])) ? $errors[$value['id']]['direccion'] : '' }}" class="{{ (isset($errors[$value['id']]['direccion'])) ? 'form-control has-error' : '' }}">
+						</td>
 
-					<td>
-					<input type="text" name="poblacion[{{$key}}]" value="{!! $value['poblacion'] !!}">
-					@if (isset($errors[$value['id']]['poblacion']))
-						<div class="alert alert-danger">
-							<button type="button" class="close" data-dismiss="alert">
-								&times;
-							</button>
-							
-	                            {{ $errors[$value['id']]['poblacion'] }}
-	                        
-						</div>
-					@endif
-					<td>
-					<input type="text" size="6" name="cp[{{$key}}]" value="{!! $value['cp'] !!}">
-					@if (isset($errors[$value['id']]['cp']))
-						<div class="alert alert-danger">
-							<button type="button" class="close" data-dismiss="alert">
-								&times;
-							</button>
-							
-	                            {{ $errors[$value['id']]['cp'] }}
-	                        
-						</div>
-					@endif
-					</td>
+						<td>
+							<input type="text" size="10"  name="poblacion[]" value="{!! $value['poblacion'] !!}" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ (isset($errors[$value['id']]['poblacion'])) ? $errors[$value['id']]['poblacion'] : '' }}" class="{{ (isset($errors[$value['id']]['poblacion'])) ? 'form-control has-error' : '' }}">
+						</td>
 
-					<td>
-					<input type="text" size="10" name="provincia[{{$key}}]" value="{!! $value['provincia'] !!}">
-					@if (isset($errors[$value['id']]['provincia']))
-						<div class="alert alert-danger">
-							<button type="button" class="close" data-dismiss="alert">
-								&times;
-							</button>
-							
-	                            {{ $errors[$value['id']]['provincia'] }}
-	                        
-						</div>
-					@endif
-					</td>
+						<td>
+							<input type="text" size="6" name="cp[]" value="{!! $value['cp'] !!}" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ (isset($errors[$value['id']]['cp'])) ? $errors[$value['id']]['cp'] : '' }}" class="{{ (isset($errors[$value['id']]['cp'])) ? 'form-control has-error' : '' }}">
+						</td>
 
-					<td>
-					<input type="text" size="10" name="telefono[{{$key}}]" value="{!! $value['telefono'] !!}">
-					@if (isset($errors[$value['id']]['telefono']))
-						<div class="alert alert-danger">
-							<button type="button" class="close" data-dismiss="alert">
-								&times;
-							</button>
-							
-	                            {{ $errors[$value['id']]['telefono'] }}
-	                        
-						</div>
-					@endif
-					</td>
+						<td>
+							<input type="text" size="10" name="provincia[]" value="{!! $value['provincia'] !!}" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ (isset($errors[$value['id']]['provincia'])) ? $errors[$value['id']]['provincia'] : '' }}" class="{{ (isset($errors[$value['id']]['provincia'])) ? 'form-control has-error' : '' }}">
+						</td>
 
-					<td>
-					<input type="text" size="10" name="observaciones[{{$key}}]" value="{!! $value['observaciones'] !!}">
-					@if (isset($errors[$value['id']]['observaciones']))
-						<div class="alert alert-danger">
-							<button type="button" class="close" data-dismiss="alert">
-								&times;
-							</button>
-							
-	                            {{ $errors[$value['id']]['observaciones'] }}
-	                        
-						</div>
-					@endif
-					</td>
+						<td>
+							<input type="text" size="10" name="telefono[]" value="{!! $value['telefono'] !!}" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ (isset($errors[$value['id']]['telefono'])) ? $errors[$value['id']]['telefono'] : '' }}" class="{{ (isset($errors[$value['id']]['telefono'])) ? 'form-control has-error' : '' }}">
+						</td>
 
-					<td>
-					<input type="text" size="10" name="fecha[{{$key}}]" value="{!! $value['fecha'] !!}">
-					@if (isset($errors[$value['id']]['fecha']))
-						<div class="alert alert-danger">
-							<button type="button" class="close" data-dismiss="alert">
-								&times;
-							</button>
-							
-	                            {{ $errors[$value['id']]['fecha'] }}
-	                        
-						</div>
-					@endif
-					</td>
-				</tr>
+						<td>
+							<input type="text" size="10" name="observaciones[]" value="{!! $value['observaciones'] !!}" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ (isset($errors[$value['id']]['observaciones'])) ? $errors[$value['id']]['observaciones'] : '' }}" class="{{ (isset($errors[$value['id']]['observaciones'])) ? 'form-control has-error' : '' }}">
+						</td>
 
-				@endforeach
+						<td>
+							<input type="text" size="10" name="fecha[]" value="{!! $value['fecha'] !!}" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ (isset($errors[$value['id']]['fecha'])) ? $errors[$value['id']]['fecha'] : '' }}" class="{{ (isset($errors[$value['id']]['fecha'])) ? 'form-control has-error' : '' }}">
+						</td>
+					</tr>
 
-                </form>
-            </tbody>
-        </table>
+					@endforeach
+
+	                {{ Form::close() }}
+		        </tbody>
+	        </table>
+	        </div>
 		</div>	
 	</section>
 
@@ -206,22 +119,7 @@
 	<script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
 		<!-- mi ajax -->
-
-	<script type="text/javascript">
-		
-		$(document).ready(function () {
-			
-			 $.ajax({
-                url: "validate-albaran",
-                type: "get",
-                dataType: "json",
-                data:  $("input[name='albaran[]']"),
-
-            }).done(function(response){
-            	console.log(response);
-            });
-		});
-	</script>
+	<script type="text/javascript" src="{{ asset('js/mijs.js') }} "></script>
 
 </body>
 </html>

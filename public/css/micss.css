@@ -1,0 +1,30 @@
+		/* Color of invalid field */
+		.has-error  {
+		    color: #a94442;
+		    border-color: #a94442;
+		}
+
+		.has-error:hover  {
+		    color: #a94442;
+		    border-color: #a94442;
+		}
+		.has-error:active  {
+		    color: #a94442;
+		    border-color: #a94442;
+		}
+		.has-error:focus  {
+		    color: #a94442;
+		    border-color: #a94442;
+		    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 0, 0, .6);
+		          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 0, 0, .6);
+		}
+		.popover{
+			color: #a94442;
+			background-color: #f2dede;
+			border-color: #ebccd1;
+		}
+		.popover-content{
+			color: #a94442;
+			background-color: #f2dede;
+			border-color: #ebccd1;
+		}
