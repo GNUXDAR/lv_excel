@@ -18,6 +18,6 @@ Route::get('/', function () {
 Route::get('/home', 'ExcelController@index')->name('home');
 
 Route::post('/import-excel', 'ExcelController@importFile');
-Route::post('/export', 'ExcelController@importFile');
+Route::post('/export', 'ExcelController@store');
 
 Route::get('validate-albaran','ExcelController@validateAlbaran');

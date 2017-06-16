@@ -20,7 +20,7 @@
 		
 		<div class="container">
 		<div>
-		{{ Form::open (['url' => 'export', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'class' => 'form-horizontal']) }}
+		{{ Form::open (['url' => 'export', 'method' => 'POST', 'class' => 'form-horizontal']) }}
 
 		{!! csrf_field() !!}
 		<br><a href="{{ route('home') }}" class="btn btn-success">Atras</a>
@@ -35,6 +35,7 @@
 				<div id="tablecontent"></div>
 				@
 			</table> -->
+
 		<div class="table-responsive">
 			<table class="table table-striped">
 	            <thead>

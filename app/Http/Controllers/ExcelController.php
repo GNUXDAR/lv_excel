@@ -13,15 +13,29 @@ class ExcelController extends Controller
 {
     protected $request;
     protected $encargo;
-    public $data = [];
-    public $i = 1;
-    public $errors = [];
-    public $input = [];
+    protected $data = [];
+    protected $i = 1;
+    protected $errors;
+    protected $input;
+    protected $rules;
 
     public function __construct(Request $request, Encargo $encargo)
     {
         $this->request = $request;
         $this->encargo = $encargo;
+        $this->errors = [];
+        $this->data = [];
+        $this->rules = [
+            'albaran'       => 'required|numeric|max:9999999999',
+            'destinatario'  => 'required|string|max:28',
+            'direccion'     => 'required|string|max:250',
+            'poblacion'     => 'required|string|max:10',
+            'cp'            => 'required|string|min:5|max:5',
+            'provincia'     => 'required|max:20',
+            'telefono'      => 'required|max:10',
+            'observaciones' => 'max:500',
+            'fecha'         => 'required|date',
+        ];
     }
 
     public function index()
@@ -36,21 +50,71 @@ class ExcelController extends Controller
 
     public function importFile(Request $request, Encargo $encargo)
     {
-        $this->rules = [
-            'albaran'       => 'required|numeric|max:9999999999',
-            'destinatario'  => 'required|string|max:28',
-            'direccion'     => 'required|string|max:250',
-            'poblacion'     => 'required|string|max:10',
-            'cp'            => 'required|string|min:5|max:5',
-            'provincia'     => 'required|max:20',
-            'telefono'      => 'required|max:10',
-            'observaciones' => 'max:500',
-            'fecha'         => 'required|date',
-        ];
+        $this->processData($request);
 
-        $this->errors = [];
-        $this->data = [];
+        return view('registro.export', [ 'data' => $this->data, 'errors' => $this->errors, 'input' => $this->input]);
+    }
 
+    /**
+     * Validate cell against the rules.
+     *
+     * @param array $data
+     * @param array $rules
+     *
+     * @return array
+     */
+    protected function validateCell(array $data, array $rules)
+    {
+        // Perform Validation
+        $validator = \Validator::make($data, $rules);
+
+        if ($validator->fails()) {
+            $errorMessages = $validator->errors()->messages();
+
+            // crete error message by using key and value
+            foreach ($errorMessages as $key => $value) {
+                $errorMessages = $value[0];
+            }
+
+            return $errorMessages;
+        }
+
+        return [];
+    }
+
+    public function store(Request $request)
+    {
+        $this->validateData($request);
+
+        if (!empty($this->errors)) {
+            return view('registro.export', [
+                'data' => $this->data,
+                'errors' => $this->errors,
+                'input' => $this->input
+            ]);
+        }
+
+        foreach ($this->data as $data) {
+
+            $data = array_except($data, ['id']);
+
+            $encargo = new Encargo;
+            $encargo->albaran = $data['albaran'];
+            $encargo->destinatario = $data['destinatario'];
+            $encargo->direccion = $data['direccion'];
+            $encargo->poblacion = $data['poblacion'];
+            $encargo->cp = $data['cp'];
+            $encargo->provincia = $data['provincia'];
+            $encargo->telefono = $data['telefono'];
+            $encargo->observaciones = $data['observaciones'];
+            $encargo->save();
+        }
+
+        return redirect()->route('home')->with('info', 'Datos Guardados');
+    }
+
+    protected function processData($request)
+    {
         Excel::selectSheetsByIndex(0)->load($request->excel, function($reader) {
             
             $reader->formatDates(true, 'd-m-Y');
@@ -89,53 +153,33 @@ class ExcelController extends Controller
                 $this->rowNumber++;
             });
         });
-
-        return view('registro.export', [ 'data' => $this->data, 'errors' => $this->errors, 'input' => $this->input]);
     }
 
-    /**
-     * Validate cell against the rules.
-     *
-     * @param array $data
-     * @param array $rules
-     *
-     * @return array
-     */
-    protected function validateCell(array $data, array $rules)
+    protected function validateData($request)
     {
-        // Perform Validation
-        $validator = \Validator::make($data, $rules);
+        $data = $request->except('_token');
 
-        if ($validator->fails()) {
-            $errorMessages = $validator->errors()->messages();
+        $this->errors = [];
+        $this->rowNumber = 0;
 
-            // crete error message by using key and value
-            foreach ($errorMessages as $key => $value) {
-                $errorMessages = $value[0];
+        foreach ($data as $dataKey => $value) {
+
+            $i = 0;
+
+            foreach ($value as $item) {
+
+                $error = $this->validateCell([$dataKey => $item], [$dataKey => $this->rules[$dataKey]]);
+
+                if (!empty($error)) {
+                    $this->errors[$i][$dataKey] = $error;
+                }
+
+                $this->data[$i]['id'] = $i;
+
+                $this->data[$i][$dataKey] = $item;
+
+                $i++;
             }
-
-            return $errorMessages;
-        }else{
-
-        return [];
         }
     }
-
-    public function store(ExcelRequest $request)
-    {
-        //dd($request->all());
-        $validateExcel = new Excel;
-
-        $validateExcel->albaran   =   $request->albaran;
-        $validateExcel->destinatario   =   $request->destinatario;
-        $validateExcel->direccion =   $request->direccion;
-        $validateExcel->poblacion    =   $request->poblacion;
-        $validateExcel->provincia    =   $request->provincia;
-        $validateExcel->telefono    =   $request->telefono;
-        $validateExcel->observaciones    =   $request->observaciones;
-        $validateExcel->fecha    =   $request->fecha;
-        $validateExcel->save();
-        return redirect()->route('home')->with('info', 'Datos Guardados');
-    }
-
 }
