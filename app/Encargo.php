@@ -12,7 +12,7 @@ class Encargo extends Model
 				'cp', 'provincia', 'telefono',
 				'observaciones', 'fecha',
     		];
-    protected $table = 'encargos2';
+    protected $table = 'encargos';
 
     //protected $timestamp = false;
 }

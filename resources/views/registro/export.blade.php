@@ -90,7 +90,7 @@
 						</td>
 
 						<td>
-							<input type="text" size="10" name="fecha[]" value="{!! $value['fecha'] !!}" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ (isset($errors[$value['id']]['fecha'])) ? $errors[$value['id']]['fecha'] : '' }}" class="{{ (isset($errors[$value['id']]['fecha'])) ? 'form-control has-error' : '' }}">
+							<input type="date" size="10" name="fecha[]" value="{!! $value['fecha'] !!}" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ (isset($errors[$value['id']]['fecha'])) ? $errors[$value['id']]['fecha'] : '' }}" class="{{ (isset($errors[$value['id']]['fecha'])) ? 'form-control has-error' : '' }}">
 						</td>
 					</tr>
 

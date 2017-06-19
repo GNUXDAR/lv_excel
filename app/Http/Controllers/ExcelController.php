@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Encargo;
 use \Excel;
@@ -107,6 +105,7 @@ class ExcelController extends Controller
             $encargo->provincia = $data['provincia'];
             $encargo->telefono = $data['telefono'];
             $encargo->observaciones = $data['observaciones'];
+            $encargo->fecha = $data['fecha'];
             $encargo->save();
         }
 
@@ -117,7 +116,7 @@ class ExcelController extends Controller
     {
         Excel::selectSheetsByIndex(0)->load($request->excel, function($reader) {
             
-            $reader->formatDates(true, 'd-m-Y');
+            //$reader->formatDates(true, 'd-m-Y');
 
             $excel = $reader->get();
 
