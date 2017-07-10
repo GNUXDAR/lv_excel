@@ -4,6 +4,8 @@ function comprueba_extension(formulario, archivo) {
    if (!archivo) {
       //Si no tengo archivo, es que no se ha seleccionado un archivo en el formulario
        mierror = "No has seleccionado ningún archivo";
+       alert (mierror);
+       window.location='/home';
    }else{
       //recupero la extensión de este nombre de archivo
       extension = (archivo.substring(archivo.lastIndexOf("."))).toLowerCase();
@@ -18,6 +20,8 @@ function comprueba_extension(formulario, archivo) {
       }
       if (!permitida) {
          mierror = "Comprueba la extensión del archivo. \nSólo se pueden subir archivos con extensiones: " + extensiones_permitidas.join();
+         alert (mierror);
+         window.location='/home';
          
        }else{
          //alert ("Todo correcto.");

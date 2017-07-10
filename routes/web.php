@@ -20,4 +20,4 @@ Route::get('/home', 'ExcelController@index')->name('home');
 Route::post('/import-excel', 'ExcelController@importFile');
 Route::post('/export', 'ExcelController@store');
 
-Route::get('validate-albaran','ExcelController@validateAlbaran');
+//Route::get('validate-albaran','ExcelController@validateAlbaran');

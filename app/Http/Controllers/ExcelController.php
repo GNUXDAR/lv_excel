@@ -30,7 +30,7 @@ class ExcelController extends Controller
             'poblacion'     => 'required|string|max:10',
             'cp'            => 'required|string|min:5|max:5',
             'provincia'     => 'required|max:20',
-            'telefono'      => 'required|max:10',
+            'telefono'      => 'required|numeric|max:9999999999',
             'observaciones' => 'max:500',
             'fecha'         => 'required|date',
         ];

@@ -23,7 +23,7 @@
 		{{ Form::open (['url' => 'export', 'method' => 'POST', 'class' => 'form-horizontal']) }}
 
 		{!! csrf_field() !!}
-		<br><a href="{{ route('home') }}" class="btn btn-success">Atras</a>
+		<br><a href="{{ route('home') }}" class="btn btn-lg btn-primary btn-danger">Cancelar</a>
 		{{ Form::submit('Procesar', ['class' => 'btn btn-lg btn-primary pull-right', 'id' => 'request'])}}
 		<!-- <a href="#" class="btn btn-primary pull-right">Procesar</a> --><br><br>
 		</div>

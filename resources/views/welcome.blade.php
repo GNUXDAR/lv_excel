@@ -84,7 +84,7 @@
 
                 <div class="links">
                     <a href="{{ url('home') }}">Procesar Excel</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="https://github.com/gnuxdar/lv_excel/tree/input2">GitHub</a>
                 </div>
             </div>
         </div>
