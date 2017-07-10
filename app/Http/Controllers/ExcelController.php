@@ -25,10 +25,10 @@ class ExcelController extends Controller
         $this->data = [];
         $this->rules = [
             'albaran'       => 'required|numeric|max:9999999999',
-            'destinatario'  => 'required|string|max:28',
-            'direccion'     => 'required|string|max:250',
-            'poblacion'     => 'required|string|max:10',
-            'cp'            => 'required|string|min:5|max:5',
+            'destinatario'  => 'required|regex:/^[A-z][A-z\s\.\']+$/|max:28',
+            'direccion'     => 'required|regex:/^[A-z][A-z\s\.\']+$/|max:250',
+            'poblacion'     => 'required|regex:/^[A-z][A-z\s\.\']+$/|max:10',
+            'cp'            => 'required|regex:/^[A-z][A-z\s\.\']+$/|min:5|max:5',
             'provincia'     => 'required|max:20',
             'telefono'      => 'required|numeric|max:9999999999',
             'observaciones' => 'max:500',
